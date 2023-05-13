@@ -12,8 +12,10 @@ INC_DIR		:= include
 SRC_DIR		:= src
 
 SRC_CLIENT	:= client/client.c \
+			   client/utils.c
 
 SRC_SERVER	:= server/server.c \
+			   server/utils.c
 
 # Objects
 OBJ_DIR		:= build
@@ -23,7 +25,9 @@ OBJ_CLIENT	:= $(addprefix $(OBJ_DIR)/, $(SRC_CLIENT:.c=.o))
 OBJ_SERVER	:= $(addprefix $(OBJ_DIR)/, $(SRC_SERVER:.c=.o))
 
 # Libraries
-LIBFT_DIR	:= 42-libft
+LIB_DIR		:= lib
+
+LIBFT_DIR	:= $(LIB_DIR)/42-libft
 
 LIBFT		:= libft.a
 
@@ -38,14 +42,16 @@ CLFLAGS		:= -L$(LIBFT_DIR) -lft
 
 $(NAME):	$(NAME_CLIENT) $(NAME_SERVER)
 
-$(NAME_CLIENT):	$(OBJ_CLIENT) $(LIBFT)
-		$(CC) $(CFLAGS) $< -o $(NAME_CLIENT) $(CLFLAGS)
+$(NAME_CLIENT):	$(OBJ_CLIENT)
+		$(MAKE) -C $(LIBFT_DIR) all
+		$(CC) $(CFLAGS) $^ -o $(NAME_CLIENT) $(CLFLAGS)
 
-$(NAME_SERVER):	$(OBJ_SERVER) $(LIBFT)
-		$(CC) $(CFLAGS) $< -o $(NAME_SERVER) -L ./$(LIBFT_DIR) $(CLFLAGS)
+$(NAME_SERVER):	$(OBJ_SERVER)
+		$(MAKE) -C $(LIBFT_DIR) all
+		$(CC) $(CFLAGS) $^ -o $(NAME_SERVER) -L ./$(LIBFT_DIR) $(CLFLAGS)
 
 $(LIBFT):	
-		make -C $(LIBFT_DIR) all
+		$(MAKE) -C $(LIBFT_DIR) all
 
 all:		$(NAME)
 
@@ -55,11 +61,11 @@ $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
 
 clean:
 		rm -rf $(OBJ_DIR)
-		make -C $(LIBFT_DIR) clean
+		$(MAKE) -C $(LIBFT_DIR) clean
 
-fclean:		clean
-		rm -f $(NAME)
-		make -C $(LIBFT_DIR) fclean
+fclean:	clean
+		rm -f $(NAME) $(NAME_CLIENT) $(NAME_SERVER)
+		$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: 		fclean all
 
