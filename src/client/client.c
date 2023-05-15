@@ -12,6 +12,8 @@
 
 #include "client.h"
 
+t_msg	g_msg;
+
 int	parse_msg(int ac, char **av)
 {
 	long	pid;

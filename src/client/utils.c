@@ -12,6 +12,8 @@
 
 #include "client.h"
 
+extern t_msg	g_msg;
+
 int	print_error_message(int error_code)
 {
 	if (error_code == ERRCODE_ARGC)

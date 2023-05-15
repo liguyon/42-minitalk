@@ -12,12 +12,16 @@
 
 #include "server.h"
 
+extern t_msg	g_msg;
+
 int	print_error_message(int error_code)
 {
 	if (error_code == ERRCODE_SIGACTION_FAIL)
 		ft_print_error(ERRMSG_SIGACTION_FAIL);
 	else if (error_code == ERRCODE_SEND_SIG)
 		ft_print_error(ERRMSG_SEND_SIG);
+	else if (error_code == ERRCODE_MALLOC_FAIL)
+		ft_print_error(ERRMSG_MALLOC_FAIL);
 	return (error_code);
 }
 

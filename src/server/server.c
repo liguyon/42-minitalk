@@ -12,6 +12,8 @@
 
 #include "server.h"
 
+t_msg	g_msg;
+
 void	sigusr_handler(int signum, siginfo_t *siginfo, void *context)
 {
 	(void)context;

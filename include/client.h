@@ -30,8 +30,6 @@ typedef struct s_msg
 	int					msg_received;
 }	t_msg;
 
-t_msg	g_msg;
-
 # define ERRCODE_ARGC 1
 # define ERRMSG_ARGC "Invalid number of arguments. \
 		Specify the PID and the message to send.\n"
